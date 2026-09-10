@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Tramitação - Gestão de Expedientes</title>
+    <style> body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 600px;
+        max-width: 92%;
+        margin: 40px auto;
+    }
+
+    .card {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+        margin: 0 0 8px 0;
+        color: #343a40;
+    }
+
+    .descricao {
+        color: #6c757d;
+        margin-bottom: 25px;
+    }
+
+    .campo {
+        margin-bottom: 18px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 11px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: #0d6efd;
+    }
+
+    .acoes {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+    }
+
+    .botao {
+        padding: 11px 18px;
+        border-radius: 5px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .guardar {
+        background-color: #198754;
+        color: white;
+    }
+
+    .cancelar {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .botao:hover {
+        opacity: 0.85;
+    } </style>
+</head>
+<body>
+<div class="container">
+    <div class="card"><h1>Nova Tramitação</h1>
+        <p class="descricao"> Registe o encaminhamento de um expediente. </p>
+        <form th:action="@{/tramitacoes/salvar}" th:object="${tramitacao}" method="post">
+            <div class="campo">
+
+                <label for="expedienteId">
+                    Expediente
+                </label>
+
+                <select id="expedienteId"
+                        th:field="*{expedienteId}"
+                        required>
+
+                    <option value="">
+                        -- Seleccione o expediente --
+                    </option>
+
+                    <option th:each="expediente : ${expedientes}"
+                            th:value="${expediente.id}"
+                            th:text="${expediente.numero + ' - ' + expediente.assunto}">
+                    </option>
+
+                </select>
+
+            </div>
+            <div class="campo">
+
+                <label for="utilizadorId">
+                    Utilizador
+                </label>
+
+                <select id="utilizadorId"
+                        th:field="*{utilizadorId}"
+                        required>
+
+                    <option value="">
+                        -- Seleccione o utilizador --
+                    </option>
+
+                    <option th:each="utilizador : ${utilizadores}"
+                            th:value="${utilizador.id}"
+                            th:text="${utilizador.nome + ' (' + utilizador.username + ')'}">
+                    </option>
+
+                </select>
+
+            </div>
+            <div class="campo"><label for="destino"> Destino </label> <input type="text" id="destino"
+                                                                             th:field="*{destino}"
+                                                                             placeholder="Ex.: Direcção, Secretaria, Departamento..."
+                                                                             required></div>
+            <div class="campo"><label for="observacao"> Observação </label> <textarea id="observacao"
+                                                                                      th:field="*{observacao}"
+                                                                                      placeholder="Digite uma observação sobre o encaminhamento..."> </textarea>
+            </div>
+            <div class="acoes"><a href="/tramitacoes" class="botao cancelar"> Cancelar </a>
+                <button type="submit" class="botao guardar"> Registar Tramitação</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despachos - Gestão de Expedientes</title>
+    <style> body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 95%;
+        margin: 30px auto;
+    }
+
+    .header {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .header h1 {
+        margin: 0 0 8px 0;
+    }
+
+    .header p {
+        margin: 0;
+        color: #666;
+    }
+
+    .acoes {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .botao {
+        display: inline-block;
+        padding: 10px 16px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .botao-novo {
+        background-color: #198754;
+        color: white;
+    }
+
+    .botao-dashboard {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .tabela-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        background-color: #343a40;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+
+    td {
+        padding: 11px;
+        border-bottom: 1px solid #ddd;
+        vertical-align: top;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .vazio {
+        text-align: center;
+        color: #777;
+        padding: 25px;
+    } </style>
+</head>
+<body>
+<div class="container">
+    <div class="header"><h1>Gestão de Despachos</h1>
+        <p>Consulta e gestão dos despachos emitidos para os expedientes.</p></div>
+    <div class="acoes"><a href="/" class="botao botao-dashboard"> Voltar ao Dashboard </a> <a href="/despachos/novo"
+                                                                                              class="botao botao-novo">
+        + Novo Despacho </a></div>
+    <div class="tabela-container"><h2>Lista de Despachos</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Expediente</th>
+                <th>Gestor</th>
+                <th>Despacho</th>
+                <th>Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="despacho : ${despachos}">
+                <td th:text="${despacho.id}"></td>
+                <td><span th:each="expediente : ${expedientes}" th:if="${expediente.id == despacho.expedienteId}"
+                          th:text="${expediente.numero + ' - ' + expediente.assunto}"> </span></td>
+                <td><span th:each="utilizador : ${utilizadores}" th:if="${utilizador.id == despacho.gestorId}"
+                          th:text="${utilizador.nome}"> </span></td>
+                <td th:text="${despacho.despacho}"></td>
+                <td th:text="${#temporals.format(despacho.data, 'dd/MM/yyyy HH:mm')}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(despachos)}">
+                <td colspan="5" class="vazio"> Nenhum despacho registado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

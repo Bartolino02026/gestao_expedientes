@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Despachos</title>
+    <style> body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 95%;
+        max-width: 1400px;
+        margin: 30px auto;
+    }
+
+    .cabecalho {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        border-top: 5px solid #0d6efd;
+    }
+
+    .titulo-relatorio {
+        text-align: center;
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 20px;
+    }
+
+    .titulo-relatorio h1 {
+        margin: 0;
+        font-size: 24px;
+        color: #343a40;
+        letter-spacing: 1px;
+    }
+
+    .titulo-relatorio h2 {
+        margin: 8px 0;
+        font-size: 20px;
+        color: #0d6efd;
+    }
+
+    .titulo-relatorio p {
+        margin: 0;
+        color: #6c757d;
+        font-size: 14px;
+    }
+
+    .informacoes-relatorio {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 18px;
+        color: #495057;
+        font-size: 14px;
+    }
+
+    .tabela-container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        overflow-x: auto;
+    }
+
+    .tabela-container table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+
+    .tabela-container th {
+        background-color: #343a40;
+        color: white;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .tabela-container td {
+        padding: 9px;
+        border-bottom: 1px solid #dee2e6;
+        vertical-align: top;
+    }
+
+    .tabela-container tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .vazio {
+        text-align: center;
+        color: #6c757d;
+        padding: 30px;
+    }
+
+    .acoes {
+        margin-top: 20px;
+    }
+
+    .botao {
+        display: inline-block;
+        width: auto;
+        padding: 8px 14px;
+        margin-right: 8px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        font-size: 13px;
+        box-sizing: border-box;
+    }
+
+    .botao-imprimir {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .botao-voltar {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .botao:hover {
+        opacity: 0.85;
+    }
+
+    @media print {
+        body {
+            background-color: white;
+        }
+
+        .acoes {
+            display: none;
+        }
+
+        .cabecalho, .tabela-container {
+            box-shadow: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+        }
+    } </style>
+</head>
+<body>
+<div class="container">
+    <div class="cabecalho">
+        <div class="titulo-relatorio"><h1>GESTÃO DE EXPEDIENTES</h1>
+            <h2>RELATÓRIO DE DESPACHOS</h2>
+            <p> Relação dos despachos registados no sistema </p></div>
+        <div class="informacoes-relatorio">
+            <div><strong>Total de despachos:</strong> <span th:text="${#lists.size(despachos)}"></span></div>
+            <div><strong>Data de emissão:</strong> <span
+                    th:text="${#temporals.format(T(java.time.LocalDateTime).now(), 'dd/MM/yyyy HH:mm')}"></span></div>
+        </div>
+    </div>
+    <div class="tabela-container">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Expediente</th>
+                <th>Gestor</th>
+                <th>Despacho</th>
+                <th>Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="despacho : ${despachos}">
+                <td th:text="${despacho.id}"></td>
+                <td th:text="${despacho.expedienteId}"></td>
+                <td th:text="${despacho.gestorId}"></td>
+                <td th:text="${despacho.despacho}"></td>
+                <td th:text="${despacho.data}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(despachos)}">
+                <td colspan="5" class="vazio"> Nenhum despacho registado.</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="acoes">
+            <button type="button" class="botao botao-imprimir" onclick="window.print()"> Imprimir</button>
+            <a href="/relatorios" class="botao botao-voltar"> Voltar aos Relatórios </a></div>
+    </div>
+</div>
+</body>
+</html>

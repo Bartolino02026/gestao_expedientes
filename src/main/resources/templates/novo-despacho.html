@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Despacho - Gestão de Expedientes</title>
+    <style> body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 800px;
+        margin: 30px auto;
+    }
+
+    .header {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .header h1 {
+        margin: 0 0 8px 0;
+    }
+
+    .header p {
+        margin: 0;
+        color: #666;
+    }
+
+    .formulario {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .campo {
+        margin-bottom: 20px;
+    }
+
+    .campo label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    .campo select, .campo textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 11px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .campo textarea {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    .acoes {
+        margin-top: 25px;
+    }
+
+    .botao {
+        display: inline-block;
+        padding: 10px 18px;
+        border-radius: 5px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        margin-right: 8px;
+    }
+
+    .botao-salvar {
+        background-color: #198754;
+        color: white;
+    }
+
+    .botao-voltar {
+        background-color: #6c757d;
+        color: white;
+    } </style>
+</head>
+<body>
+<div class="container">
+    <div class="header"><h1>Novo Despacho</h1>
+        <p>Registo de um despacho associado a um expediente.</p></div>
+    <div class="formulario">
+        <form th:action="@{/despachos/salvar}"
+              th:object="${despacho}"
+              method="post">
+            <div class="campo"><label for="expedienteId"> Expediente </label> <select id="expedienteId"
+                                                                                      th:field="*{expedienteId}"
+                                                                                      required>
+                <option value=""> -- Seleccione o expediente --</option>
+                <option th:each="expediente : ${expedientes}"
+                        th:value="${expediente.id}"
+                        th:text="${expediente.numero + ' - ' + expediente.assunto}"></option>
+            </select></div>
+            <div class="campo"><label for="gestorId"> Gestor responsável </label> <select id="gestorId"
+                                                                                          th:field="*{gestorId}"
+                                                                                          required>
+                <option value=""> -- Seleccione o gestor --</option>
+                <option th:each="utilizador : ${utilizadores}"
+                        th:value="${utilizador.id}"
+                        th:text="${utilizador.nome + ' (' + utilizador.username + ')'}"></option>
+            </select></div>
+            <div class="campo"><label for="despacho"> Despacho </label> <textarea id="despacho"
+                                                                                  th:field="*{despacho}"
+                                                                                  placeholder="Digite o conteúdo do despacho..."
+                                                                                  required></textarea></div>
+            <div class="acoes"><a href="/despachos" class="botao botao-voltar"> Cancelar </a>
+                <button type="submit" class="botao botao-salvar"> Registar Despacho</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Utilizador - Gestão de Expedientes</title>
+    <style> body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 800px;
+        margin: 30px auto;
+    }
+
+    .header {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .header h1 {
+        margin: 0 0 8px 0;
+    }
+
+    .header p {
+        margin: 0;
+        color: #666;
+    }
+
+    .formulario {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .campo {
+        margin-bottom: 18px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 7px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    .campo-checkbox {
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .campo-checkbox label {
+        display: inline;
+        font-weight: normal;
+        margin-left: 5px;
+    }
+
+    .campo-checkbox input {
+        width: auto;
+    }
+
+    .acoes {
+        margin-top: 25px;
+        display: flex;
+        gap: 10px;
+    }
+
+    button, .botao-voltar {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    button {
+        background-color: #198754;
+        color: white;
+    }
+
+    .botao-voltar {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    button:hover, .botao-voltar:hover {
+        opacity: 0.85;
+    } </style>
+</head>
+<body>
+<div class="container">
+    <div class="header"><h1>Novo Utilizador</h1>
+        <p>Registo de um novo utilizador no sistema.</p></div>
+    <div class="formulario">
+        <form th:action="@{/utilizadores/salvar}" th:object="${utilizador}" method="post">
+            <div class="campo"><label for="nome">Nome:</label> <input type="text" id="nome" th:field="*{nome}" required>
+            </div>
+            <div class="campo"><label for="username">Username:</label> <input type="text" id="username"
+                                                                              th:field="*{username}" required></div>
+            <div class="campo"><label for="password">Password:</label> <input type="password" id="password"
+                                                                              th:field="*{password}" required></div>
+            <div class="campo"><label for="papel">Papel:</label> <select id="papel" th:field="*{papel}" required>
+                <option value=""> -- Seleccione --</option>
+                <option value="ADMINISTRADOR"> Administrador</option>
+                <option value="FUNCIONARIO"> Funcionário</option>
+                <option value="GESTOR"> Gestor</option>
+            </select></div>
+            <div class="campo-checkbox"><input type="checkbox" id="activo" th:field="*{activo}"> <label for="activo">
+                Utilizador activo </label></div>
+            <div class="acoes">
+                <button type="submit"> Guardar Utilizador</button>
+                <a href="/utilizadores" class="botao-voltar"> Voltar para a lista </a></div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

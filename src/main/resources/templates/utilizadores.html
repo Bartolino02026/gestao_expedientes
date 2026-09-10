@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilizadores - Gestão de Expedientes</title>
+    <style> body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 95%;
+        margin: 30px auto;
+    }
+
+    .header {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .header h1 {
+        margin: 0 0 8px 0;
+    }
+
+    .header p {
+        margin: 0;
+        color: #666;
+    }
+
+    .acoes {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .botao {
+        display: inline-block;
+        padding: 10px 16px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-right: 8px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .botao-novo {
+        background-color: #198754;
+        color: white;
+    }
+
+    .botao-dashboard {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .tabela-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        background-color: #343a40;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+
+    td {
+        padding: 11px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .papel {
+        font-weight: bold;
+    }
+
+    .activo {
+        color: #198754;
+        font-weight: bold;
+    }
+
+    .inactivo {
+        color: #dc3545;
+        font-weight: bold;
+    }
+
+    .vazio {
+        text-align: center;
+        color: #777;
+        padding: 25px;
+    }
+
+    .botao:hover {
+        opacity: 0.85;
+    }
+
+    .botao-editar {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .botao-editar:hover {
+        opacity: 0.85;
+    }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header"><h1>Gestão de Utilizadores</h1>
+        <p>Consulta e gestão dos utilizadores registados no sistema.</p></div>
+    <div class="acoes">
+        <div><a href="/" class="botao botao-dashboard"> Dashboard </a></div>
+        <div><a href="/utilizadores/novo" class="botao botao-novo"> + Novo Utilizador </a></div>
+    </div>
+    <div class="tabela-container">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Username</th>
+                <th>Papel</th>
+                <th>Estado</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="utilizador : ${utilizadores}">
+                <td th:text="${utilizador.id}"></td>
+                <td th:text="${utilizador.nome}"></td>
+                <td th:text="${utilizador.username}"></td>
+                <td class="papel" th:text="${utilizador.papel}"></td>
+                <td><span th:if="${utilizador.activo}" class="activo"> Activo </span> <span
+                        th:unless="${utilizador.activo}" class="inactivo"> Inactivo </span></td>
+                <td>
+                    <a th:href="@{/utilizadores/editar/{id}(id=${utilizador.id})}"
+                       class="botao botao-editar">
+                        Editar
+                    </a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(utilizadores)}">
+                <td colspan="6" class="vazio"> Nenhum utilizador registado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <style> body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 850px;
+        margin: 30px auto;
+    }
+
+    .header {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .header h1 {
+        margin: 0 0 8px 0;
+    }
+
+    .header p {
+        margin: 0;
+        color: #666;
+    }
+
+    .detalhes {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .campo {
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .campo:last-child {
+        border-bottom: none;
+    }
+
+    .campo strong {
+        display: block;
+        color: #555;
+        margin-bottom: 6px;
+    }
+
+    .campo span {
+        font-size: 16px;
+        color: #222;
+    }
+
+    .acoes {
+        margin-top: 20px;
+    }
+
+    .botao {
+        display: inline-block;
+        padding: 10px 18px;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-right: 8px;
+    }
+
+    .botao-voltar {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .botao-editar {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .botao-imprimir {
+        background-color: #198754;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .historico {
+        margin-top: 30px;
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .historico h2 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        color: #343a40;
+    }
+
+    .historico table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
+    .historico th {
+        background-color: #343a40;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .historico td {
+        padding: 11px;
+        border-bottom: 1px solid #ddd;
+        color: #333;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .historico tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .historico p {
+        color: #777;
+        margin: 0;
+        margin-top: 30px;
+    }
+
+    @media print {
+        body {
+            background-color: white;
+            margin: 0;
+        }
+
+        .acoes {
+            display: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+        }
+
+        .header {
+            box-shadow: none;
+            border-radius: 0;
+            text-align: center;
+            border-bottom: 2px solid #000;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .texto-tela {
+            display: none;
+        }
+
+        .detalhes, .historico {
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        .detalhes {
+            padding: 10px;
+        }
+    } </style>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>EXPEDIENTE Nº: <span th:text="${expediente.numero}"></span></h1>
+            <p class="texto-tela">Visualização completa das informações do expediente.</p>
+        </div>
+
+        <div class="detalhes">
+
+            <div class="campo">
+                <strong>Assunto</strong>
+                <span th:text="${expediente.assunto}"></span>
+            </div>
+
+            <div class="campo">
+                <strong>Remetente</strong>
+                <span th:text="${expediente.remetente}"></span>
+            </div>
+
+            <div class="campo">
+                <strong>Destinatário</strong>
+                <span th:text="${expediente.destinatario}"></span>
+            </div>
+
+            <div class="campo">
+                <strong>Data de Entrada</strong>
+                <span th:text="${#temporals.format(expediente.dataEntrada, 'dd/MM/yyyy')}"></span>
+            </div>
+
+            <div class="campo">
+                <strong>Estado</strong>
+                <span th:text="${expediente.estado}"></span>
+            </div>
+
+            <div class="campo">
+                <strong>Observação</strong>
+                <span th:text="${expediente.observacao}"></span>
+            </div>
+
+            <div class="acoes">
+                <button type="button" class="botao botao-imprimir" onclick="window.print()">
+                    Imprimir
+                </button>
+
+                <a href="/expedientes" class="botao botao-voltar">
+                    Voltar para a lista
+                </a>
+
+                <a th:href="@{/expedientes/editar/{id}(id=${expediente.id})}"
+                   class="botao botao-editar">
+                    Editar
+                </a>
+            </div>
+            <div class="historico">
+
+                <h2>Histórico de Tramitações</h2>
+
+                <p th:if="${#lists.isEmpty(tramitacoes)}">
+                    Este expediente ainda não possui tramitações registadas.
+                </p>
+
+                <table th:if="${!#lists.isEmpty(tramitacoes)}">
+
+                    <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Utilizador</th>
+                        <th>Destino</th>
+                        <th>Observação</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="tramitacao : ${tramitacoes}">
+
+                        <td th:text="${#temporals.format(tramitacao.data, 'dd/MM/yyyy HH:mm')}"></td>
+
+                        <td>
+                        <span th:each="utilizador : ${utilizadores}"
+                              th:if="${utilizador.id == tramitacao.utilizadorId}"
+                              th:text="${utilizador.nome}">
+                        </span>
+                        </td>
+
+                        <td th:text="${tramitacao.destino}"></td>
+
+                        <td th:text="${tramitacao.observacao}"></td>
+
+                    </tr>
+
+
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="historico">
+
+                <h2>Histórico de Despachos</h2>
+
+                <p th:if="${#lists.isEmpty(despachos)}">
+                    Este expediente ainda não possui despachos registados.
+                </p>
+
+                <table th:if="${!#lists.isEmpty(despachos)}">
+
+                    <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Gestor</th>
+                        <th>Despacho</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="despacho : ${despachos}">
+
+                        <td th:text="${#temporals.format(despacho.data, 'dd/MM/yyyy HH:mm')}"></td>
+
+                        <td>
+                <span th:each="utilizador : ${utilizadores}"
+                      th:if="${utilizador.id == despacho.gestorId}"
+                      th:text="${utilizador.nome}">
+                </span>
+                        </td>
+
+                        <td th:text="${despacho.despacho}"></td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+    </head>
+</html>

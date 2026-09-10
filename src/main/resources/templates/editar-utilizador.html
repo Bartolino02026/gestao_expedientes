@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Utilizador - Gestão de Expedientes</title>
+    <style> body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 600px;
+        max-width: 92%;
+        margin: 40px auto;
+    }
+
+    .card {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+        margin: 0 0 8px 0;
+        color: #343a40;
+    }
+
+    .descricao {
+        color: #6c757d;
+        margin-bottom: 25px;
+    }
+
+    .campo {
+        margin-bottom: 18px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 11px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        border-color: #0d6efd;
+    }
+
+    .checkbox {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .checkbox input {
+        width: auto;
+    }
+
+    .acoes {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+    }
+
+    .botao {
+        padding: 11px 18px;
+        border-radius: 5px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .guardar {
+        background-color: #198754;
+        color: white;
+    }
+
+    .cancelar {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .botao:hover {
+        opacity: 0.85;
+    } </style>
+</head>
+<body>
+<div class="container">
+    <div class="card"><h1>Editar Utilizador</h1>
+        <p class="descricao"> Actualize os dados do utilizador seleccionado. </p>
+        <form th:action="@{/utilizadores/editar}" th:object="${utilizador}" method="post"><input type="hidden"
+                                                                                                 th:field="*{id}">
+            <div class="campo"><label for="nome">Nome</label> <input type="text" id="nome" th:field="*{nome}" required>
+            </div>
+            <div class="campo"><label for="username">Username</label> <input type="text" id="username"
+                                                                             th:field="*{username}" required></div>
+            <div class="campo"><label for="password">Nova Palavra-passe</label> <input type="password" id="password"
+                                                                                       th:field="*{password}" required>
+            </div>
+            <div class="campo"><label for="papel">Papel</label> <select id="papel" th:field="*{papel}" required>
+                <option value="ADMINISTRADOR"> Administrador</option>
+                <option value="FUNCIONARIO"> Funcionário</option>
+                <option value="GESTOR"> Gestor</option>
+            </select></div>
+            <div class="campo checkbox"><input type="checkbox" id="activo" th:field="*{activo}"> <label for="activo">
+                Utilizador activo </label></div>
+            <div class="acoes"><a href="/utilizadores" class="botao cancelar"> Cancelar </a>
+                <button type="submit" class="botao guardar"> Guardar Alterações</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

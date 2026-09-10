@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios - Gestão de Expedientes</title>
+    <style> body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 95%;
+        max-width: 1200px;
+        margin: 40px auto;
+    }
+
+    .card {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+        margin: 0 0 8px 0;
+        color: #343a40;
+    }
+
+    .descricao {
+        color: #6c757d;
+        margin-bottom: 30px;
+    }
+
+    .relatorios {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+    }
+
+    .relatorio {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 22px;
+        background-color: #f8f9fa;
+    }
+
+    .relatorio h2 {
+        margin-top: 0;
+        color: #343a40;
+        font-size: 20px;
+    }
+
+    .relatorio p {
+        color: #6c757d;
+        line-height: 1.5;
+    }
+
+    .botao {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 16px;
+        background-color: #0d6efd;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .botao:hover {
+        opacity: 0.85;
+    }
+
+    .voltar {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 18px;
+        background-color: #6c757d;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .voltar:hover {
+        opacity: 0.85;
+    } </style>
+</head>
+<body>
+<div class="container">
+    <div class="card"><h1>Relatórios</h1>
+        <p class="descricao"> Consulta e geração de relatórios do sistema de Gestão de Expedientes.
+        </p>
+        <div class="relatorios">
+            <div class="relatorio">
+                <h2>Relatório de Expedientes</h2>
+                <p> Consulta os expedientes registados no sistema, incluindo o estado e as principais informações.
+                </p>
+                <p><strong>Total de expedientes:
+                </strong> <span th:text="${#lists.size(expedientes)}">
+
+                </span></p>
+                <a href="/relatorios/expedientes" class="botao"> Consultar </a>
+            </div>
+
+            <div class="relatorio"><h2>Relatório de tramitações</h2>
+                <p>
+                    Consulta o histórico de encaminhamento e movimentação dos expedientes.
+                </p>
+                <p><strong>Total de Tramitações:</strong> <span th:text="${#lists.size(tramitacoes)}"></span>
+                </p>
+                <a href="/relatorios/tramitacoes" class="botao"> Consultar </a>
+            </div>
+
+
+            <div class="relatorio"><h2>Relatório de Despachos</h2>
+                <p> Consulta os despachos realizados sobre os expedientes registados. </p>
+                <p><strong>Total de despachos:</strong> <span th:text="${#lists.size(despachos)}"></span></p> <a
+                        href="relatorios/despachos" class="botao"> Consultar </a></div>
+
+            <div class="relatorio"><h2>Relatório de Auditoria</h2>
+                <p> Consulta as acções realizadas pelos utilizadores dentro do sistema. </p>
+                <p><strong>Total de registos:</strong> <span th:text="${#lists.size(auditorias)}"></span></p> <a
+                        href="relatorios/auditoria" class="botao"> Consultar </a>
+            </div>
+        </div>
+        <a href="/" class="voltar"> Voltar ao Dashboard </a>
+    </div>
+</div>
+</body>
+</html>

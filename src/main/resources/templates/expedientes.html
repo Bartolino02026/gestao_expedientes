@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expedientes - Gestão de Expedientes</title>
+    <style> body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 95%;
+        margin: 30px auto;
+    }
+
+    .header {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .header h1 {
+        margin: 0 0 8px 0;
+    }
+
+    .header p {
+        margin: 0;
+        color: #666;
+    }
+
+    .acoes {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .botao {
+        display: inline-block;
+        padding: 10px 16px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-right: 8px;
+    }
+
+    .botao-novo {
+        background-color: #198754;
+        color: white;
+    }
+
+    .botao-dashboard {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .tabela-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        background-color: #343a40;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+
+    td {
+        padding: 11px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .estado {
+        font-weight: bold;
+    }
+
+
+    .vazio {
+        text-align: center;
+        color: #777;
+        padding: 25px;
+    }
+
+    .acoes-tabela {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .acao {
+        padding: 7px 12px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .acao-visualizar {
+        background-color: #0d6efd;
+    }
+
+    .acao-editar {
+        background-color: #198754;
+    }
+
+    .acao-eliminar {
+        background-color: #dc3545;
+    }
+
+    .acao:hover {
+        opacity: 0.85;
+    }
+    </style>
+
+
+</head>
+<body>
+<div class="container">
+    <div class="header"><h1>Gestão de Expedientes</h1>
+        <p>Consulta e gestão dos expedientes registados no sistema.</p></div>
+    <div class="acoes"><a href="/" class="botao botao-dashboard"> Voltar ao Dashboard </a> <a href="/expedientes/novo"
+                                                                                              class="botao botao-novo">
+        + Novo Expediente </a></div>
+    <div class="tabela-container"><h2>Lista de Expedientes</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Assunto</th>
+                <th>Remetente</th>
+                <th>Destinatário</th>
+                <th>Data de Entrada</th>
+                <th>Estado</th>
+                <th>Observação</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="expediente : ${expedientes}">
+                <td th:text="${expediente.id}"></td>
+                <td th:text="${expediente.assunto}"></td>
+                <td th:text="${expediente.remetente}"></td>
+                <td th:text="${expediente.destinatario}"></td>
+                <td th:text="${expediente.dataEntrada}"></td>
+                <td class="estado" th:text="${expediente.estado}"></td>
+                <td th:text="${expediente.observacao}"></td>
+                <td>
+                    <div class="acoes-tabela"><a class="acao acao-visualizar"
+                                                 th:href="@{/expedientes/visualizar/{id}(id=${expediente.id})}">
+                        Visualizar </a> <a class="acao acao-editar"
+                                           th:href="@{/expedientes/editar/{id}(id=${expediente.id})}"> Editar </a> <a
+                            class="acao acao-eliminar" th:href="@{/expedientes/eliminar/{id}(id=${expediente.id})}"
+                            onclick="return confirm('Tem certeza que deseja eliminar este expediente?');"> Eliminar </a>
+                    </div>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(expedientes)}">
+                <td colspan="8" class="vazio"> Nenhum expediente registado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

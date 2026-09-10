@@ -1,0 +1,93 @@
+<hr>
+<style> .dashboard-menu {
+    background: White;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 25px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-menu h3 {
+    margin: 0 0 20px 0;
+    color: #343a40;
+    font-size: 22px;
+    border-bottom: 2px solid #0d6efd;
+    padding-bottom: 18px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.menu-item {
+    display: block;
+    padding: 18px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #343a40;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.menu-item:hover {
+    background-color: #0d6efd;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.menu-icon {
+    display: block;
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.logout-area {
+    border-top: 1px solid #dee2e6;
+    padding-top: 20px;
+    text-align: right;
+}
+
+.botao-logout {
+    padding: 11px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.botao-logout:hover {
+    background-color: #bb2d3b;
+} </style>
+<div class="dashboard-menu"><h3>Menu Principal</h3>
+    <div class="menu-grid">
+        <a href="/utilizadores" class="menu-item">
+            <span class="menu-icon">👥</span> Utilizadores </a>
+        <a href="/expedientes" class="menu-item">
+            <span class="menu-icon">📁</span>
+            Expedientes </a>
+        <a href="/tramitacoes" class="menu-item"> <span class="menu-icon">🔄</span>
+            Tramitação </a>
+        <a href="/despachos" class="menu-item"> <span class="menu-icon">📄</span>
+        Despachos </a>
+        <a href="/auditoria" class="menu-item"> <span class="menu-icon">🔐</span>
+        Auditoria </a>
+        <a href="/relatorios" class="menu-item"> <span class="menu-icon">📊</span>
+        Relatórios </a></div>
+    <div class="logout-area">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="botao-logout"> Terminar sessão</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

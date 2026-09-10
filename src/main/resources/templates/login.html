@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso ao Sistema - Gestão de Expedientes</title>
+    <style> * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #0d6efd, #084298);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 420px;
+        padding: 20px;
+    }
+
+    .login-card {
+        background: white;
+        border-radius: 14px;
+        padding: 40px;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.20);
+    }
+
+    .cabecalho {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .logo {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 15px auto;
+        background-color: #0d6efd;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .cabecalho h1 {
+        margin: 0;
+        color: #343a40;
+        font-size: 24px;
+    }
+
+    .cabecalho p {
+        margin-top: 8px;
+        color: #6c757d;
+        font-size: 14px;
+    }
+
+    .campo {
+        margin-bottom: 20px;
+    }
+
+    .campo label {
+        display: block;
+        margin-bottom: 8px;
+        color: #343a40;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .campo input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #ced4da;
+        border-radius: 7px;
+        font-size: 14px;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    .campo input:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+    }
+
+    .botao-login {
+        width: 100%;
+        padding: 13px;
+        background-color: #0d6efd;
+        color: white;
+        border: none;
+        border-radius: 7px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .botao-login:hover {
+        background-color: #0b5ed7;
+        transform: translateY(-1px);
+    }
+
+    .mensagem {
+        padding: 12px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .erro {
+        background-color: #f8d7da;
+        color: #842029;
+        border: 1px solid #f5c2c7;
+    }
+
+    .sucesso {
+        background-color: #d1e7dd;
+        color: #0f5132;
+        border: 1px solid #badbcc;
+    }
+
+    .rodape {
+        text-align: center;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid #dee2e6;
+        color: #6c757d;
+        font-size: 12px;
+    }
+
+    @media (max-width: 480px) {
+        .login-card {
+            padding: 30px 25px;
+        }
+
+        .cabecalho h1 {
+            font-size: 21px;
+        }
+    } </style>
+</head>
+<body>
+<div class="login-container">
+    <div class="login-card">
+        <div class="cabecalho">
+            <div class="logo"> GE</div>
+            <h1>Gestão de Expedientes</h1>
+            <p> Acesso ao sistema </p></div>
+        <div th:if="${param.error}" class="mensagem erro"> Utilizador ou palavra-passe incorrectos.</div>
+        <div th:if="${param.logout}" class="mensagem sucesso"> Sessão terminada com sucesso.</div>
+        <form th:action="@{/login}" method="post">
+            <div class="campo"><label for="username"> Nome de utilizador </label> <input type="text" id="username"
+                                                                                         name="username"
+                                                                                         placeholder="Introduza o seu utilizador"
+                                                                                         required autofocus></div>
+            <div class="campo"><label for="password"> Palavra-passe </label> <input type="password" id="password"
+                                                                                    name="password"
+                                                                                    placeholder="Introduza a sua palavra-passe"
+                                                                                    required></div>
+            <button type="submit" class="botao-login"> Iniciar sessão</button>
+        </form>
+        <div class="rodape"> Sistema de Gestão de Expedientes</div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoria - Gestão de Expedientes</title>
+    <style> body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 95%;
+        max-width: 1200px;
+        margin: 30px auto;
+    }
+
+    .header {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .header h1 {
+        margin: 0 0 8px 0;
+    }
+
+    .header p {
+        margin: 0;
+        color: #666;
+    }
+
+    .acoes {
+        margin-bottom: 20px;
+    }
+
+    .botao {
+        display: inline-block;
+        padding: 10px 16px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .botao-dashboard {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .tabela-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow-x: auto;
+    }
+
+    .tabela-container h2 {
+        margin-top: 0;
+        color: #343a40;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    th {
+        background-color: #343a40;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+
+    td {
+        padding: 11px;
+        border-bottom: 1px solid #ddd;
+        color: #333;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .vazio {
+        text-align: center;
+        color: #777;
+        padding: 25px;
+    }
+
+    .data {
+        white-space: nowrap;
+    } </style>
+</head>
+<body>
+<div class="container">
+    <div class="header"><h1>Auditoria do Sistema</h1>
+        <p>Registo das acções realizadas pelos utilizadores no sistema.</p></div>
+    <div class="acoes"><a href="/" class="botao botao-dashboard"> Voltar ao Dashboard </a></div>
+    <div class="tabela-container"><h2>Registo de Auditoria</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Data</th>
+                <th>Utilizador</th>
+                <th>Acção</th>
+                <th>Descrição</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="auditoria : ${auditorias}">
+                <td th:text="${auditoria.id}"></td>
+                <td class="data" th:text="${#temporals.format(auditoria.data, 'dd/MM/yyyy HH:mm')}"></td>
+                <td><span th:each="utilizador : ${utilizadores}" th:if="${utilizador.id == auditoria.utilizadorId}"
+                          th:text="${utilizador.nome}"> </span></td>
+                <td th:text="${auditoria.accao}"></td>
+                <td th:text="${auditoria.descricao}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(auditorias)}">
+                <td colspan="5" class="vazio"> Nenhum registo de auditoria encontrado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
