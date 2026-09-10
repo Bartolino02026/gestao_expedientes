@@ -462,9 +462,8 @@ Repositório GitHub
 
 O código-fonte completo do projecto está disponível no seguinte repositório:
 
-LINK_DO_REPOSITORIO_GITHUB
+[LINK_DO_REPOSITORIO_GITHUB](https://github.com/Bartolino02026/gestao_expedientes)
 
-Nota: O endereço acima deverá ser substituído pelo link público do repositório GitHub após a publicação do projecto.
 
 Contribuição
 
